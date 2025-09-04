@@ -1,0 +1,108 @@
+
+datos_prueba = {
+    'X1': [-0.10537],
+    'X2': [0.53629],
+    'X3': [-0.045578],
+    'X4': [0.91478],
+    'X6': [-0.10537],
+    'X8': [0.8646],
+    'X9': [0.9504],
+    'X10': [0.46367],
+    'X17': [1.8647],
+    'X18': [-0.10994],
+    'X19': [-0.077072],
+    'X23': [-0.073868],
+    'X44': [77.374],
+    'X50': [0.91225],
+    'X51': [0.53481],
+    'X60': [7.7332],
+    'X61': [4.7174]
+}
+
+datos_prueba = {
+    'X1': [0.20055],
+    'X2': [0.37951],
+    'X3': [0.39641],
+    'X4': [2.0472],
+    'X6': [0.38825],
+    'X8': [1.3305],
+    'X9': [1.1389],
+    'X10': [0.50494],
+    'X17': [2.6349],
+    'X18': [0.24976],
+    'X19': [0.14942],
+    'X23': [0.11998],
+    'X44': [71.05],
+    'X50': [2.042],
+    'X51': [0.37854],
+    'X60': [8.416],
+    'X61': [5.1372]
+}
+
+
+activo_corriente= 500000
+pasivo_corriente= 250000
+total_activos= 1000000
+total_pasivos= 400000
+inventario_inicial= 80000
+inventario_final= 100000
+costo_ventas= 600000
+ventas_credito= 800000
+cuentas_por_cobrar= 160000
+ventas_totales= 1200000
+utilidad_neta= 180000
+patrimonio= 600000
+
+
+
+activo_corriente= 150000
+pasivo_corriente= 200000
+total_activos= 600000
+total_pasivos= 480000
+inventario_inicial= 100000
+inventario_final= 120000
+costo_ventas= 300000
+ventas_credito= 350000
+cuentas_por_cobrar= 250000
+ventas_totales= 500000
+utilidad_neta= 15000
+patrimonio= 120000
+
+x1=utilidad_neta/total_activos
+x2=total_pasivos/total_activos
+x3=(activo_corriente - pasivo_corriente) / total_activos
+x4=activo_corriente / pasivo_corriente
+x6=utilidad_neta / total_activos
+x8=patrimonio / total_pasivos
+x9=ventas_totales / total_activos
+x10=patrimonio / total_activos
+x17=total_activos / total_pasivos
+x18=(ventas_totales - costo_ventas) / total_activos
+x19=(ventas_totales - costo_ventas) / ventas_totales
+x23=utilidad_neta / ventas_totales
+x44=(cuentas_por_cobrar * 365) / ventas_totales
+x50=activo_corriente / total_pasivos
+x51=pasivo_corriente / total_activos
+x60=ventas_totales / inventario_final
+x61=ventas_totales / cuentas_por_cobrar
+datos_prueba = {
+    'X1': x1,
+    'X2': x2,
+    'X3': x3,
+    'X4': x4,
+    'X6': x6,
+    'X8': x8,
+    'X9': x9,
+    'X10': x10,
+    'X17': x17,
+    'X18': x18,
+    'X19': x19,
+    'X23': x23,
+    'X44': x44,
+    'X50': x50,
+    'X51': x51,
+    'X60': x60,
+    'X61': x61
+}
+# Crear DataFrame con los datos
+df_prueba = pd.DataFrame([datos_prueba])

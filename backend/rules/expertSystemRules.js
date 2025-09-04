@@ -86,7 +86,7 @@ const financialKnowledgeBase = {
        weight: 0.1
     },
     RotacionDeActivos:{
-      name: "Rotación de activos",
+      name: "Rotacion de activos",
       description: "Eficiencia en el uso de activos para generar ventas.",
       formula: "Ventas_Totales / Activo_Total",
       interpretation: {
