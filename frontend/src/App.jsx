@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Container, Typography, CssBaseline } from '@mui/material'
 import DiagnosticForm from './components/DiagnosticForm'
-import ResultsView from './components/ResultsView'
 
 function App() {
   const [result, setResult] = useState(null)
@@ -13,11 +12,9 @@ function App() {
         Semáforo PyME
       </Typography>
       
-      {!result ? (
-        <DiagnosticForm setResult={setResult} />
-      ) : (
-        <ResultsView result={result} onBack={() => setResult(null)} />
-      )}
+     
+      <DiagnosticForm/>
+    
     </Container>
   )
 }

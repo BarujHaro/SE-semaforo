@@ -2,6 +2,8 @@ import numpy as np
 import os
 import joblib
 import pandas as pd
+import sys
+import json
 
 def createModel():
     from sklearn.model_selection import train_test_split
@@ -60,38 +62,42 @@ def createModel():
     #y_prob = model.predict_proba(X_test)[:, 1]
     y_prob = model.predict_proba(X_test)[:, 1]
 
-    print("===DECISION TREE===")
-    print("Matriz de confusión:\n", confusion_matrix(y_test, y_pred))
-    porcent = model.score(X_test, y_test)
-    print(f"El modelo obtuvo {porcent*100} % de precision para clasificar")
-
-    f1 = f1_score(y_test, y_pred)
-    print(f"El modelo obtuvo un indice F1 Score de: {f1}")
-
-
-    print(classification_report(y_test, y_pred))
-    print(f"ROC AUC Score: {roc_auc_score(y_test, y_prob):.4f}")
-    print('Model accuracy score with criterion gini index: {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
+ 
     joblib.dump(model, 'model/modelo_tree.pkl')
 
-def predict(*input_data):
-    # Cargar el modelo
-    model = joblib.load('model/modelo_tree.pkl')  # Corregir la ruta
-    
-    # Convertir los argumentos a un array numpy
+
+def predict(input_data):
+    #model = joblib.load('model/modelo_tree.pkl')
+    model_path = os.path.join(os.path.dirname(__file__), 'modelo_tree.pkl')
+    model = joblib.load(model_path)
     input_array = np.array(input_data).reshape(1, -1)
-    
-    # Hacer la predicción
     prediction = model.predict(input_array)
     prediction_proba = model.predict_proba(input_array)
-    
+
     return {
-        'prediction': prediction[0],
-        'probability_class_0': prediction_proba[0][0],
-        'probability_class_1': prediction_proba[0][1]
+        'prediction': int(prediction[0]),
+        'probability_class_0': float(prediction_proba[0][0]),
+        'probability_class_1': float(prediction_proba[0][1])
     }
 
-
+if __name__ == "__main__":
+    try:
+        # Leer JSON de Node (stdin)
+        data = sys.stdin.read()
+        if not data:
+            print(json.dumps({'error': 'No se recibieron datos'}))
+            sys.exit(1)
+            
+        data_json = json.loads(data)
+        features = data_json["features"]
+        
+        result = predict(features)
+        print(json.dumps(result))
+        
+    except Exception as e:
+        error_result = {'error': f'Error general: {str(e)}'}
+        print(json.dumps(error_result))
+        sys.exit(1)
 #createModel()
 # Ejemplo de uso
 #resultado = predict(-0.10537, 0.53629, -0.045578, 0.91478, -0.10537, 0.8646, 

@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
-import { calculateDiagnostic } from '../services/api'
+import { useState } from 'react'
 import axios from 'axios'
-// calculateDiagnostic
-export default function DiagnosticForm({ setResult }) {
+import Analysis from './Analysis';
+
+const DiagnosticForm= () => {
   const [score, setScore] = useState('');
   const [explain, setExplain] = useState('');
+  const [predictionTree, setPredictionTree] = useState('');
+  const [scoreTree, setScoreTree] = useState([]);
+
+  
   const [formData, setFormData] = useState({
     activo_corriente: "",
     pasivo_corriente: "",
@@ -19,7 +23,7 @@ export default function DiagnosticForm({ setResult }) {
     utilidad_neta: "",
     patrimonio: "",
   })
-//pasivo_total financiado, activo_total financiado
+
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
@@ -28,22 +32,63 @@ export default function DiagnosticForm({ setResult }) {
     }))
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const SystemExpertDiagnosis = async() => {
     try {
       
         const res = await axios.post('http://localhost:5000/api/diagnostic', 
       formData
     );
-        console.log("score",res.data);
+    
         setScore(res.data.overall.score);
-const explanations = Object.values(res.data.details).map(item => item.explanation);
-setExplain(res.data.details);
+        
+        setExplain(res.data.details);
+        console.log(res.data);
         return res;
     } catch (error) {
       console.error('Error al calcular:', error)
     }
   }
+
+  const TreeDiagnosis = async() => {
+    try{
+      const response = await axios.post(
+        "http://localhost:5000/api/predict",
+        formData, 
+        { headers: { "Content-Type": "application/json" } }
+      );
+
+      setPredictionTree(response.data.prediction);
+
+      setScoreTree([response.data.probability_class_0, response.data.probability_class_1]);
+      console.log(predictionTree);
+      //console.log("Predicción:", response.data.prediction);
+      //console.log("Clase 0:", response.data.probability_class_0);
+      //console.log("Clase 1:", response.data.probability_class_1);
+    }catch(error) {
+      console.error('Error al calcular:', error)
+    }
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await SystemExpertDiagnosis();
+
+      await TreeDiagnosis();
+       
+    } catch (error) {
+      console.error('Error al calcular:', error)
+    }
+  }
+
+
+  const getDiagnostico = (score) => {
+    if (score < 40) return "Riesgo de quiebra";
+    if (score >= 40 && score <= 70) return "Empresa estable";
+    if (score > 70) return "Empresa saludable";
+    return "Sin diagnóstico";
+  };
+
 
   return (
     <div>
@@ -166,20 +211,47 @@ setExplain(res.data.details);
       </form>
 
       {score && (
-        <div>{score}</div>
+        <>
+        <h2>Diagnostico financiero</h2>
+        </>
+      )}
+
+
+      {score && (
+        <>
+        <h3>Sistema experto</h3>
+        <p>Resultado:{getDiagnostico(score)}</p>
+        <div><p>Score: <span>{score}</span></p></div>
+        </>
+      )}
+
+      {scoreTree.length > 0 && predictionTree !== '' && (
+        <>
+        <h3>Modelo de Machine Learning</h3>
+        <p>
+          Predicción: {" "}
+          {predictionTree===0?(
+            <span>Fuera de riesgo</span>
+          ):(
+            <span>En riesgo</span>
+          )}
+        </p>
+        <p>Score estimado: <span>{(Math.max(scoreTree[0],scoreTree[1]) * 100).toFixed(1)}%</span></p>
+        </>
       )}
 
    {explain && (
-  <div>
-    {Object.values(explain).map((item, index) => (
-      <div key={index} style={{marginBottom: '10px'}}>
-        <strong>{item.metric}:</strong> {item.explanation}
-      </div>
-    ))}
-  </div>
+    <>
+    <h3>Análisis</h3>
+    <Analysis explain={explain} />
+    
+
+  </>
 )}
 
 
     </div>
   )
 }
+
+export default DiagnosticForm;

@@ -9,9 +9,9 @@ const financialKnowledgeBase = {
       formula: "Activo Corriente / Pasivo Corriente",
       interpretation: {
         ranges: [
-          { condition: (value) => value < 1 || value > 5, rating: "Malo", score: 20, explanation: "No puede cubrir deudas a corto plazo" },
-          { condition: (value) => value >= 1 && value < 1.5, rating: "Regular", score: 60, explanation: "Capacidad mínima adecuada para deudas a corto plazo" },
-          { condition: (value) => value >= 1.5 && value <= 5, rating: "Bueno", score: 100, explanation: "Posición líquida saludable" }
+          { condition: (value) => value < 1 || value > 5, rating: "Malo", score: 20, explanation: "No puede cubrir deudas a corto plazo, se debe renegociar deudas urgentemente." },
+          { condition: (value) => value >= 1 && value < 1.5, rating: "Regular", score: 60, explanation: "Capacidad mínima adecuada para deudas a corto plazo, se debe optmizar la línea de crédito preventiva." },
+          { condition: (value) => value >= 1.5 && value <= 5, rating: "Bueno", score: 100, explanation: "Posición líquida saludable, se debe mantener las políticas actuales." }
         ]
       },
       weight: 0.1
@@ -24,8 +24,8 @@ const financialKnowledgeBase = {
       interpretation: {
         ranges: [
          
-           { condition: (value) => value < 0, rating: "Malo", score: 20, explanation: "Riesgo alto de no poder pagar obligaciones inmediatas"},
-            { condition: (value) => value === 0, rating: "Regular", score: 60, explanation: "Justo alcanza para cubrir las deudas a corto plazo"},
+           { condition: (value) => value < 0, rating: "Malo", score: 20, explanation: "Riesgo alto de no poder pagar obligaciones inmediatas, se requiere financiación externa."},
+            { condition: (value) => value === 0, rating: "Regular", score: 60, explanation: "Justo alcanza para cubrir las deudas a corto plazo, se debe optimizar el control de flujo de caja."},
           { condition: (value) => value > 0, rating: "Bueno", score: 100, explanation: "La empresa tiene excedente después de cubrir todas sus deudas a corto plazo."}
         ]
       },
@@ -38,9 +38,9 @@ const financialKnowledgeBase = {
       formula: "Pasivo_Total_financiado / Activo_Total_financiado",
       interpretation: {
         ranges: [
-           { condition: (value) => value > 0.7 || value < 0, rating: "Malo", score: 20, explanation: "Deuda demasiada alta"},
-            { condition: (value) => value >= 0.5 && value <= 0.7, rating: "Regular", score: 60, explanation: "Nivel de deuda aceptable"},
-          { condition: (value) => value > 0 && value < 0.5, rating: "Bueno", score: 100, explanation: "Buena independencia financiera"}
+           { condition: (value) => value > 0.7 || value < 0, rating: "Malo", score: 20, explanation: "Deuda demasiada alta, se debe disminuir apalancamiento y usar utilidades para reducir pasivos."},
+            { condition: (value) => value >= 0.5 && value <= 0.7, rating: "Regular", score: 60, explanation: "Nivel de deuda aceptable, se debe buscar financiar con capital propio."},
+          { condition: (value) => value > 0 && value < 0.5, rating: "Bueno", score: 100, explanation: "Buena independencia financiera, se tiene la capacidad de tomar deuda si es necesario."}
         ]
       },
        weight: 0.1
@@ -52,9 +52,9 @@ const financialKnowledgeBase = {
       formula: "Total Pasivos / (Total activo -Total Pasivo)",
       interpretation: {
         ranges: [
-           { condition: (value) => value > 1.5, rating: "Malo", score: 20, explanation: "La deuda es mucho mayor que el capital propio"},
-            { condition: (value) => value >= 1 && value < 1.5, rating: "Regular", score: 60, explanation: "La deuda es similar o un poco mayor al capital"},
-          { condition: (value) => value < 1, rating: "Bueno", score: 100, explanation: "El capital propio es mayor que la deuda"}
+           { condition: (value) => value > 1.5, rating: "Malo", score: 20, explanation: "La deuda es mucho mayor que el capital propio, se debe aumentar el capital social y retener utilidades en lugar de distribuirlas."},
+            { condition: (value) => value >= 1 && value < 1.5, rating: "Regular", score: 60, explanation: "La deuda es similar o un poco mayor al capital, se debe mantener el equilibrio."},
+          { condition: (value) => value < 1, rating: "Bueno", score: 100, explanation: "El capital propio es mayor que la deuda."}
         ]
       },
        weight: 0.1
@@ -65,8 +65,8 @@ const financialKnowledgeBase = {
       formula: "COGS / Inventario_Promedio",
       interpretation: {
         ranges: [
-          { condition: (value) => value < 2, rating: "Malo", score: 20, explanation: "Rotación de inventario lenta, mucho dinero detenido"},
-          { condition: (value) => value >= 2 && value <= 4, rating: "Regular", score: 60, explanation: "El inventario se renueva moderadamente"},
+          { condition: (value) => value < 2, rating: "Malo", score: 20, explanation: "Rotación de inventario lenta, se deben mejorar pronósticos y esquemas de inventario."},
+          { condition: (value) => value >= 2 && value <= 4, rating: "Regular", score: 60, explanation: "El inventario se renueva moderadamente, se necesita optimizar el pronóstico de demanda."},
           { condition: (value) => value > 4, rating: "Bueno", score: 100, explanation: "El inventario se renueva rápidamente. "}
         ]
       },
@@ -78,9 +78,9 @@ const financialKnowledgeBase = {
       formula: "Ventas_a_Credito / Cuentas_por_Cobrar_Promedio",
       interpretation: {
         ranges: [
-          { condition: (value) => value < 2, rating: "Malo", score: 20, explanation: "Mucho dinero esperando por cobrar"},
-          { condition: (value) => value >= 2 && value <= 5, rating: "Regular", score: 60, explanation: "Los clientes pagan en tiempos moderados"},
-          { condition: (value) => value > 5, rating: "Bueno", score: 100, explanation: "uena gestión de cartera y recuperación de dinero."}
+          { condition: (value) => value < 2, rating: "Malo", score: 20, explanation: "Mucho dinero esperando por cobrar, se deben de revisar políticas de crédito."},
+          { condition: (value) => value >= 2 && value <= 5, rating: "Regular", score: 60, explanation: "Se deben fortalecer procesos de cobro y segumiento."},
+          { condition: (value) => value > 5, rating: "Bueno", score: 100, explanation: "Se tiene una gestión eficiente de cobranza."}
         ]
       },
        weight: 0.1
@@ -91,9 +91,9 @@ const financialKnowledgeBase = {
       formula: "Ventas_Totales / Activo_Total",
       interpretation: {
         ranges: [
-        { condition: (value) => value < 0.5, rating: "Malo", score: 20, explanation: "Los activos no están generando suficientes ventas" },
-        { condition: (value) => value >= 0.5 && value <= 1.5, rating: "Regular", score: 60, explanation: "Uso moderado de los activos para generar ventas" },
-        { condition: (value) => value > 1.5, rating: "Bueno", score: 100, explanation: "Alta eficiencia en el uso de activos" }
+        { condition: (value) => value < 0.5, rating: "Malo", score: 20, explanation: "Los activos no están generando suficientes ventas, se debe mejorar la eficiencia productiva." },
+        { condition: (value) => value >= 0.5 && value <= 1.5, rating: "Regular", score: 60, explanation: "Uso moderado de los activos para generar ventas, se debe identificar activos para optimizar." },
+        { condition: (value) => value > 1.5, rating: "Bueno", score: 100, explanation: "Se tiene alta eficiencia en el uso de activos." }
     
         ]
       },
@@ -105,9 +105,9 @@ const financialKnowledgeBase = {
       formula: "Utilidad_Neta / Ventas_Totales",
       interpretation: {
         ranges: [
-        { condition: (value) => value < 0.05, rating: "Malo", score: 20, explanation: "Muy poca ganancia después de todos los gastos" },
-        { condition: (value) => value >= 0.05 && value <= 0.10, rating: "Regular", score: 60, explanation: "RRentabilidad aceptable. La empresa genera ganancias pero podría mejorar" },
-        { condition: (value) => value > 0.10, rating: "Bueno", score: 100, explanation: "Rentabilidad sólida y eficiente" }
+        { condition: (value) => value < 0.05, rating: "Malo", score: 20, explanation: "Muy poca ganancia después de todos los gastos, se debe revisar la estructura de costos y estrategia de precios." },
+        { condition: (value) => value >= 0.05 && value <= 0.10, rating: "Regular", score: 60, explanation: "Rentabilidad aceptable, se debe buscar eficiencias operativas y reducción de costos." },
+        { condition: (value) => value > 0.10, rating: "Bueno", score: 100, explanation: "Rentabilidad sólida y eficiente, se tiene capacidad para reinversión." }
     
         ]
       },
@@ -120,9 +120,9 @@ const financialKnowledgeBase = {
       formula: "Utilidad_Neta / Activo_Total",
       interpretation: {
         ranges: [
-        { condition: (value) => value < 0.05, rating: "Malo", score: 20, explanation: "Activos poco productivos, baja eficiencia" },
-        { condition: (value) => value >= 0.05 && value <= 0.10, rating: "Regular", score: 60, explanation: "Rentabilidad aceptable de los activos" },
-        { condition: (value) => value > 0.10, rating: "Bueno", score: 100, explanation: "Alta eficiencia en el uso de activos" }
+        { condition: (value) => value < 0.05, rating: "Malo", score: 20, explanation: "Activos poco productivos, se debe evaluar todas las inversiones en activos." },
+        { condition: (value) => value >= 0.05 && value <= 0.10, rating: "Regular", score: 60, explanation: "Rentabilidad aceptable de los activos, se debe optimizar la utilización de capacidad instalada." },
+        { condition: (value) => value > 0.10, rating: "Bueno", score: 100, explanation: "Alta eficiencia en el uso de activos, se puede considerar la expansión." }
     
         ]
       },
@@ -134,9 +134,9 @@ const financialKnowledgeBase = {
       formula: "Utilidad_Neta / Patrimonio",
       interpretation: {
         ranges: [
-          { condition: (value) => value < 0.10, rating: "Malo", score: 20, explanation: "Baja rentabilidad para los dueños" },
-          { condition: (value) => value >= 0.10 && value <= 0.20, rating: "Regular", score: 60, explanation: "Rentabilidad aceptable" },
-          { condition: (value) => value > 0.20, rating: "Bueno", score: 100, explanation: "Excelente rentabilidad para los propietarios" }
+          { condition: (value) => value < 0.10, rating: "Malo", score: 20, explanation: "Baja rentabilidad para el propietario, se debe revisar la estrategia de negocio." },
+          { condition: (value) => value >= 0.10 && value <= 0.20, rating: "Regular", score: 60, explanation: "Rentabilidad aceptable, se tiene que balancear el crecimiento con el retorno esperado." },
+          { condition: (value) => value > 0.20, rating: "Bueno", score: 100, explanation: "Excelente rentabilidad para los propietarios." }
       
         ]
       },
